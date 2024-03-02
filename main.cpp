@@ -54,7 +54,7 @@ class Commande{
         if (it != clients.end()){ clients.erase(it); Client::nombreClient--; }
     }
     // Afficher les commandes
-    static void afficher(int choixMenu, double addition, vector<Client> clients) {
+    static void afficher(int choixMenu, double addition, vector<Client> &clients) {
         int i = 0;
         cout << endl;
         for (auto client : clients) {
