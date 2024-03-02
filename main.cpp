@@ -54,15 +54,17 @@ class Commande{
         if (it != clients.end()){ clients.erase(it); Client::nombreClient--; }
     }
     // Afficher les commandes
-    static void afficher(int choixMenu, double addition, vector<Client> &clients) {
+    static void afficher(string nomClient, int choixMenu, double addition, vector<Client> &clients) {
         int i = 0;
         cout << endl;
         for (auto client : clients) {
-            cout << "\n\tClient: " << client.getPrenom() << " " << client.getNom();
-            cout << "\n\tMenu: " << menus.at(choixMenu-1).recette;
-            cout << "\n\tTable: " << client.getNumeroTable() << endl;
-            cout << "\n\t[+] Addition: " << addition << "$" << endl;
-            cout << "\t---------------------------------------" << endl << endl;
+            if (client.getNom() == nomClient){
+                cout << "\n\tClient: " << client.getPrenom() << " " << client.getNom();
+                cout << "\n\tMenu: " << menus.at(choixMenu-1).recette;
+                cout << "\n\tTable: " << client.getNumeroTable() << endl;
+                cout << "\n\t[+] Addition: " << addition << "$" << endl;
+                cout << "\t---------------------------------------" << endl << endl;
+            }
         }
     }
 };
@@ -106,15 +108,14 @@ int main(int argc, char const *argv[])
                 i++;
             }
             i = 1;
-            cout << "\t[#] Choisir [1~2]: ";
+            cout << "\t[#] Choisir [1~"<<menus.size()<<"]: ";
             cin>>choixMenu;
             cout << "\t[Client] Entrer: ";
             cin>>nomClient;
             for (auto client : clients){
                 if(client.getNom() == nomClient){
                     Commande({client, menus.at(choixMenu-1).nom});
-                    Commande::afficher(choixMenu, menus.at(choixMenu-1).prix, clients);
-                    break;
+                    Commande::afficher(nomClient, choixMenu-1, menus.at(choixMenu-1).prix, clients);
                 }
             }
             break;
